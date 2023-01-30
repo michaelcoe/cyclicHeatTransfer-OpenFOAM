@@ -1,0 +1,103 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.3.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      changeDictionaryDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+boundary
+{
+    inlet
+    {
+        type                cyclicAMI;
+        neighbourPatch      outlet;
+        matchTolerance      0.0001;
+        separationVector    (0.0 0.0 -0.009141);
+        transform           translational;
+
+    }
+    outlet
+    {
+        type                cyclicAMI;
+        neighbourPatch      inlet;
+        matchTolerance      0.0001;
+        separationVector    (0.0 0.0 0.009141);
+        transform           translational;
+    }
+    // inlet2
+    // {
+    //     type                cyclicAMI;
+    //     neighbourPatch      outlet2;
+    //     matchTolerance      0.01;
+    //     separationVector    (0.0 0.0 -0.009141);
+    //     transform           translational;
+
+    // }
+    // outlet2
+    // {
+    //     type                cyclicAMI;
+    //     neighbourPatch      inlet2;
+    //     matchTolerance      0.01;
+    //     separationVector    (0.0 0.0 0.009141);
+    //     transform           translational;
+    // }
+    xmin
+    {
+        // type                wall;
+        // type                symmetry;
+        type                cyclicAMI;
+        neighbourPatch      xmax;
+        matchTolerance      0.0001;
+        separationVector    (0.009141 0.0 0.0);
+        transform           translational;
+    }
+    
+    xmax
+    {
+        // type                wall;
+        // type                symmetry;
+        type                cyclicAMI;
+        neighbourPatch      xmin;
+        matchTolerance      0.0001;
+        separationVector    (-0.009141 0.0 0.0);
+        transform           translational;
+    }
+
+    ymin
+    {
+        // type                wall;
+        // type                symmetry;
+        type                cyclicAMI;
+        neighbourPatch      ymax;
+        matchTolerance      0.0001;
+        separationVector    (0.0 0.009141 0.0);
+        transform           translational;
+    }
+
+    ymax
+    {
+        // type                wall;
+        // type                symmetry;
+        type                cyclicAMI;
+        neighbourPatch      ymin;
+        matchTolerance      0.0001;
+        separationVector    (0.0 -0.009141 0.0);
+        transform           translational;
+    }
+
+    // coldside_solid
+    // {
+    //     type                wall;
+    // }
+}
+
+// ************************************************************************* //

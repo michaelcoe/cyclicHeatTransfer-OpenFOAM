@@ -1,0 +1,29 @@
+#!/bin/sh -e
+
+processors=4;
+solver=cyclicHeatSimpleFoam
+# solver=buoyantSimpleFoam
+# solver=buoyantBoussinesqSimpleFoam
+# solver=simpleFoam
+
+rm -rf 0
+cp -rf 0.orig 0
+
+# renumberMesh -overwrite > log.renumberMesh
+
+# potentialFoam | tee log.potentialFoam
+
+# $solver | tee log.cyclicTemperatureFoam
+
+
+decomposePar -force > log.decomposePar
+
+mpirun -np $processors renumberMesh -overwrite -parallel > log.renumberMesh
+
+mpirun -np $processors potentialFoam -parallel > log.potentialFoam
+
+mpirun -np $processors $solver -parallel > log."${solver}"
+
+reconstructPar -latestTime > log.reconstructPar
+
+# rm -rf processor*

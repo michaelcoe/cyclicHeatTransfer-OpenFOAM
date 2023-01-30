@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+processors=4;
+
+currentDir="$PWD"
+
+cd /home/mco155/OpenFOAM/mco155-v2206/applications/solvers/heatTransfer/cyclicHeatSimpleFoam
+./compile_code.sh
+cd $currentDir
+
+./run_mesh
+
+./run_solver

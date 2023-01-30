@@ -1,0 +1,44 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2206                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      fvOptions;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+#include "../0.orig/include/initialConditions"
+
+// momentumSource
+// {
+//     type            patchMeanVelocityForce;
+//     active          yes;
+
+//     patchMeanVelocityForceCoeffs
+//     {
+//         selectionMode   all;                    // Apply force to all cells
+//         fields          (U);                    // Name of velocity field
+//         patch           inlet;                  // Name of the patch
+//         Ubar            $flowUbar;             // Desired mean velocity
+//         relaxation      0.2;                    // Optional relaxation factor
+//     }
+// }
+
+momentumForce
+{
+    type            meanVelocityForce;
+
+    selectionMode   all;
+
+    Ubar            $flowUbar;
+}
+
+
+// ************************************************************************* //

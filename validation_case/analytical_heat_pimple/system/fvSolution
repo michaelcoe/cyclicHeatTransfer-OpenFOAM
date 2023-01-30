@@ -1,0 +1,136 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2206                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      fvSolution;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+solvers
+{
+    pcorr
+    {
+        solver          GAMG;
+        tolerance       1e-2;
+        relTol          0;
+        smoother        GaussSeidel;
+        cacheAgglomeration no;
+        nCellsInCoarsestLevel 10;
+        agglomerator    faceAreaPair;
+        mergeLevels     1;
+        maxIter         50;
+    }
+
+    p
+    {
+        $pcorr;
+        tolerance       1e-5;
+        relTol          0.01;
+    }
+    
+    Phi
+    {
+        $p;
+    }
+
+    pFinal
+    {
+        $p;
+        tolerance       1e-6;
+        relTol          0;
+    }
+
+    "rho.*"
+    {
+        solver          PCG;
+        preconditioner  DIC;
+        tolerance       0;
+        relTol          0;
+    }
+
+    p_rgh
+    {
+        solver          PCG;
+        preconditioner
+        {
+                preconditioner  GAMG;
+                smoother        DICGaussSeidel;
+                tolerance       1e-6;
+        }
+        tolerance       1e-6;
+    }
+
+    "(U|h|k|epsilon|omega|thetaBar)"
+    {
+        solver          PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-7;
+        relTol          0.01;
+    }
+    
+    "(U|h|k|epsilon|omega|thetaBar)Final"
+    {
+        $U;
+        tolerance       1e-6;
+        relTol          0;
+    }
+}
+
+potentialFlow
+{
+    nNonOrthogonalCorrectors 3;
+    PhiRefCell  0;
+    PhiRefValue 0;
+}
+
+PIMPLE
+{
+    momentumPredictor no;
+    nOuterCorrectors 10;
+    nCorrectors     1;
+    nNonOrthogonalCorrectors 3;
+    pRefCell        0;
+    pRefValue       0;
+
+    residualControl
+    {
+       
+        "(p_rgh|U|h|thetaBar)"
+        {
+            tolerance   1e-6;
+            relTol      0.1;
+        } 
+
+        "(k|epsilon|omega)" 
+        {
+            tolerance   1e-4;
+            relTol      0.1;
+        }
+    }
+}
+
+relaxationFactors
+{
+    fields
+    {
+        rho             1.0;
+        // p_rgh           0.7;
+    }
+    equations
+    {
+        U               0.3;
+        h               0.3;
+        "(k|epsilon|omega|thetaBar)" 0.7;
+    }
+}
+
+
+// ************************************************************************* //

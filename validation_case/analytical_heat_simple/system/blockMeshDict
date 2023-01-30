@@ -1,0 +1,148 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2206                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+scale   1.0;
+
+xmax    0.5;
+xmin    -0.5;
+ymax    0.25;
+ymin    -0.25;
+zmax    0.01;
+zmin    -0.01;
+
+xcells  240;
+ycells  120;
+zcells  1;
+
+zedgeMax    10;
+zedgeMin    0.1;
+
+xedgeMax    10;
+xedgeMin    0.1;
+
+vertices
+(
+    ($xmin  $ymin   $zmin) // 0
+    ($xmax  $ymin   $zmin) // 1
+    ($xmax  $ymax   $zmin) // 2
+    ($xmin  $ymax   $zmin) // 3
+
+    ($xmin  $ymin   $zmax) // 4
+    ($xmax  $ymin   $zmax) // 5
+    ($xmax  $ymax   $zmax) // 6
+    ($xmin  $ymax   $zmax) // 7
+
+);
+
+blocks
+(
+    hex (0 1 2 3 4 5 6 7) ($xcells $ycells $zcells) simpleGrading
+    (
+    // x-direction grading
+    (
+        (0.2 0.25 10)
+        (0.6 0.50 1)
+        (0.2 0.25 0.1)
+    )
+
+    // y-direction grading
+    (
+        (0.2 0.25 10)
+        (0.6 0.50 1)
+        (0.2 0.25 0.1)
+    )
+
+    // z-direction grading
+    1
+    )
+);
+
+edges
+(
+);
+
+boundary
+(
+    inlet
+    {
+        type cyclic;
+        transform       translational;
+        neighbourPatch  outlet;
+        separationVector ( 1.0 0 0 );
+        faces
+        (
+            (0 4 7 3)
+        );
+    }
+    outlet
+    {
+        type cyclic;
+        transform       translational;
+        neighbourPatch  inlet;
+        separationVector ( -1.0 0 0 );
+        faces
+        (
+            (1 2 6 5)
+        );
+    }
+    walls
+    {
+        type wall;
+        faces
+        (
+            (3 7 6 2)
+            (0 1 5 4)
+        );  
+    }
+    // wallTop
+    // {
+    //     type wall;
+    //     faces
+    //     (
+    //         (3 7 6 2)
+    //     );
+    // }
+    // wallBottom
+    // {
+    //     type wall;
+    //     faces
+    //     (
+    //         (0 1 5 4)
+    //     );
+    // }
+    front
+    {
+        type empty;
+        faces
+        (
+            (0 3 2 1)
+        );
+    }
+    back
+    {
+        type empty;
+        faces
+        (
+            (4 5 6 7)
+        );
+    }
+);
+
+mergePatchPairs
+(
+);
+
+// ************************************************************************* //
