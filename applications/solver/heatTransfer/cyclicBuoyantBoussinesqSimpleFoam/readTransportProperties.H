@@ -1,0 +1,34 @@
+singlePhaseTransportModel laminarTransport(U, phi);
+
+// Thermal expansion coefficient [1/K]
+dimensionedScalar beta("beta",dimless/dimTemperature, laminarTransport);
+
+// Reference temperature [K]
+dimensionedScalar TRef("TRef", dimTemperature, laminarTransport);
+
+// Wall temperature [K]
+dimensionedScalar Twall("Twall", dimTemperature, laminarTransport);
+
+// Laminar Prandtl number
+dimensionedScalar Pr("Pr", dimless, laminarTransport);
+
+// Turbulent Prandtl number
+dimensionedScalar Prt("Prt", dimless, laminarTransport);
+
+// Turbulent lambda number [1/m]
+dimensionedScalar lambda0("lambda0", dimless/dimLength, laminarTransport);
+
+// Domain length [m]
+dimensionedScalar Lc("Lc", dimLength, laminarTransport);
+
+// Ubar needed for flow direction [m/s]
+dimensionedVector Ubar("Ubar", dimVelocity, laminarTransport);
+
+// Initialize the flowDir vector as it doesn't change
+const vector flowDir = (Ubar.value()/mag(Ubar.value()));
+
+// desired delay before calculating lambda
+dimensionedScalar delay("delay", dimless, laminarTransport);
+
+// interval between calculations of lambda
+dimensionedScalar interval("interval", dimless, laminarTransport);
