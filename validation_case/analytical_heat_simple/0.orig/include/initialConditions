@@ -28,24 +28,26 @@ flowNu            1.68e-05;
 flowMu            2.058e-05;
 
 // pressure and velocity
-flowVelocity       uniform (1.34e-03 0.0 0.0);
+flowVelocity       uniform (1.68e-3 0.0 0.0);
 staticPressure     uniform 0;
-flowPressure       uniform 101325;
+flowPressure       uniform 0;
 
 // Temperatures
-bulkTemp            uniform -30;//293.15;
-wallTemp            uniform 0;//323.15;
+bulkTemp            uniform 323.15;//293.15;
+wallTemp            uniform 293.15;//323.15;
+reducedTemp         uniform 30;  //bulkTemp-wallTemp
 
 // Cyclic constraint
-flowUbar          (1.65e-03 0.0 0.0);
+flowUbar          (1.53181e-3 0.0 0.0);
 
 // Thermal Properties
-thermalBeta         3e-03;
+thermalBeta         3.4e-03;
 regularPr           0.7;
 turbulentPr         0.85;
 lambdaGuess         0.5387;
-domainLength        1.0;
-inletHeight	        0.5;		    
-gamma               0.01;
+domainLength        1.0;		    
+gamma               0.001;
+lambdaDelay         2000;
+lambdaInterval      1;
 
 // ************************************************************************* //

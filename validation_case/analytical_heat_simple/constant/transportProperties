@@ -13,9 +13,10 @@ FoamFile
     object      transportProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
 #include "../0/include/initialConditions"
 
-transportModel  Newtonian;
+transportModel Newtonian;
 
 // Laminar viscosity
 nu              $flowNu;
@@ -32,4 +33,24 @@ Pr              $regularPr;
 // Turbulent Prandtl number
 Prt             $turbulentPr;
 
+// Characteristic Length
+Lc              $domainLength;
+
+// Wall Temperature
+Twall           $wallTemp;
+
+// lambda Guess
+lambda0           $lambdaGuess;
+
+// lambda Guess
+Lc           $domainLength;
+
+// Average velocity in flow direction
+flowVel         $flowVelocity;
+
+// Average velocity in flow direction
+delay            $lambdaDelay;
+
+// Average velocity in flow direction
+interval            $lambdaInterval;
 // ************************************************************************* //

@@ -1,0 +1,7 @@
+#!/bin/sh -e
+
+foamCleanTutorials
+
+blockMesh > log.blockMesh
+
+touch variable.foam

@@ -90,10 +90,11 @@ int main(int argc, char *argv[])
         // Pressure-velocity SIMPLE corrector
         {
             #include "UEqn.H"
+            #include "pEqn.H"
+            
             #include "lambdaEqn.H"
             #include "thetaBarEqn.H"
             #include "thetaEqn.H"
-            #include "pEqn.H"
         }
 
         laminarTransport.correct();

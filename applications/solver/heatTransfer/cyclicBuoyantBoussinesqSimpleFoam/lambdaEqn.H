@@ -14,7 +14,7 @@ if(runTime.value() >= delay.value())
         (
             "lambdaNum",
             dimensionSet(0, 3, -1, 1, 0, 0, 0),
-            gSum(alphaEff.boundaryField()[wallsID]*theta.boundaryField()[wallsID].snGrad()*mesh.boundary()[wallsID].magSf())
+            gSum(alphaEff.boundaryField()[wallsID]*-theta.boundaryField()[wallsID].snGrad()*mesh.boundary()[wallsID].magSf())
         );
 
         dimensionedScalar lambdaDen
@@ -33,15 +33,6 @@ if(runTime.value() >= delay.value())
         Info << "lambda_num/den: " << lambdaNum.value()/lambdaDen.value() << endl;
 
         lambda = -(1/Lc)*Foam::log(1 - (lambdaNum/lambdaDen));
-        
-        // if(lambdaNum.value()/lambdaDen.value() >= 1)
-        // {
-        //     lambda = -(1/Lc)*Foam::log(1 + (lambdaNum/lambdaDen));
-        // }
-        // else
-        // {
-        //     lambda = -(1/Lc)*Foam::log(1 - (lambdaNum/lambdaDen));
-        // }
     }
 }
 else

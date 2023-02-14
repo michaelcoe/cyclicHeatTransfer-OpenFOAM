@@ -12,6 +12,8 @@ fvm::laplacian(alphaEff, thetaBar)
 
 thetaBarEqn.relax();
 
-// fvOptions.constrain(Teqn);
+fvOptions.constrain(thetaBarEqn);
 
 thetaBarEqn.solve();
+
+thetaBar = thetaBar/gAverage(thetaBar.boundaryField()[inletID]);

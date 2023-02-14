@@ -28,19 +28,8 @@ boundaryField
     {
         type            noSlip;
     }
-
-    // "(ymax|ymin)"
-    // {
-    //     type            noSlip;
-    // }
-
-    // "(xmax|xmin)"
-    // {
-    //     type            noSlip;
-    // }
-
+    
     #include "include/constantPatches"
 }
-
 
 // ************************************************************************* //

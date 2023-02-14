@@ -1,0 +1,5 @@
+#!/bin/sh -e
+
+./run_mesh
+
+./run_solver

@@ -30,20 +30,7 @@ boundaryField
         value           $internalField;
     }
 
-    // "(ymax|ymin)"
-    // {
-    //     type            calculated;
-    //     value           $internalField;
-    // }
-
-    // "(xmax|xmin)"
-    // {
-    //     type            calculated;
-    //     value           $internalField;
-    // }
-
     #include "include/constantPatches"
 }
-
 
 // ************************************************************************* //

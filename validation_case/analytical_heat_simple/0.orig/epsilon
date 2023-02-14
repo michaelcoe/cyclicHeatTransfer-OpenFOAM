@@ -10,6 +10,7 @@ FoamFile
     version     2.0;
     format      ascii;
     class       volScalarField;
+    location    "0";
     object      epsilon;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -29,18 +30,6 @@ boundaryField
         type            epsilonWallFunction;
         value           $internalField;
     }
-
-    // "(ymax|ymin)"
-    // {
-    //     type            epsilonWallFunction;
-    //     value           $internalField;
-    // }
-
-    // "(xmax|xmin)"
-    // {
-    //     type            epsilonWallFunction;
-    //     value           $internalField;
-    // }
     
     #include "include/constantPatches"
 }

@@ -1,0 +1,9 @@
+set border lw 4
+set logscale y
+set title "Residuals" font "arial,22"
+set ylabel "Residual" font "arial,18"
+set xlabel "Iteration" font "arial,18"
+set key width 1
+plot "< cat log.*SimpleFoam| grep 'lambda:' | cut -d' ' -f9 | tr -d ','" title 'lambda' with lines lw 4
+pause 1
+reread

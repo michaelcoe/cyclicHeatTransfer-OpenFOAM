@@ -26,7 +26,6 @@ volVectorField U
     mesh
 );
 
-
 Info<< "Reading field T\n" << endl;
 volScalarField T
 (
@@ -41,89 +40,11 @@ volScalarField T
     mesh
 );
 
-// initialize the source term
-// volScalarField sigma
-// (
-//     IOobject
-//     (
-//         "sigma",
-//         runTime.timeName(),
-//         mesh,
-//         IOobject::NO_READ,
-//         IOobject::AUTO_WRITE
-//     ),
-//     mesh,
-//     dimensionedScalar("sigma",dimensionSet(0, 0, -1, 1, 0, 0, 0), 0.0)
-// );
+#include "createPhi.H"
 
-Info<< "Reading thermalProperties\n" << endl;
-IOdictionary thermalProperties
-(
-    IOobject
-    (
-        "thermalProperties",
-        runTime.constant(),
-        mesh,
-        IOobject::MUST_READ,
-        IOobject::NO_WRITE
-    )
-);
+#include "readTransportProperties.H"
 
-dimensionedScalar Pr 
-(
-    "Pr",
-    dimless,
-    thermalProperties
-);
-
-dimensionedScalar Prt 
-(
-    "Prt",
-    dimless,
-    thermalProperties
-);
-
-dimensionedScalar Lc 
-(
-    "Lc",
-    dimLength,
-    thermalProperties
-);
-
-// dimensionedScalar inletH 
-// (
-//     "inletH",
-//     dimLength,
-//     thermalProperties
-// );
-
-dimensionedScalar Twall 
-(
-    "Twall",
-    dimTemperature,
-    thermalProperties
-);
-
-dimensionedScalar lambda0 
-(
-    "lambda0",
-    dimensionSet(0, -1, 0, 0, 0, 0, 0),
-    thermalProperties
-);
-
-dimensionedScalar lambda 
-(
-    "lambda",
-    dimensionSet(0, -1, 0, 0, 0, 0, 0),
-    lambda0.value()
-);
-
-dimensionedVector Ubar 
-(
-    "Ubar",
-    dimVelocity,
-    thermalProperties
-);
+dimensionedScalar lambda("lambda", dimless/dimLength,0.0);
 
 volScalarField theta
 (
@@ -131,14 +52,11 @@ volScalarField theta
     (
         "theta",
         runTime.timeName(),
-        mesh,
-        IOobject::NO_READ,
-        IOobject::AUTO_WRITE
+        mesh
     ),
-    T-Twall
+    T - Twall
 );
 
-// initialize the source term
 volScalarField thetaBar
 (
     IOobject
@@ -146,25 +64,16 @@ volScalarField thetaBar
         "thetaBar",
         runTime.timeName(),
         mesh,
-        IOobject::NO_READ,
+        IOobject::MUST_READ,
         IOobject::AUTO_WRITE
     ),
-    T
+    mesh
 );
-
-// Allocate and define variables that don't change
-vector flowDir = (Ubar.value()/mag(Ubar.value()));
-
-#include "createPhi.H"
-
 
 label pRefCell = 0;
 scalar pRefValue = 0.0;
 setRefCell(p, simple.dict(), pRefCell, pRefValue);
 mesh.setFluxRequired(p.name());
-
-
-singlePhaseTransportModel laminarTransport(U, phi);
 
 autoPtr<incompressible::turbulenceModel> turbulence
 (

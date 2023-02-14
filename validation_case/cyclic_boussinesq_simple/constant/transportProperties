@@ -46,7 +46,7 @@ lambda0           $lambdaGuess;
 Lc           $domainLength;
 
 // Average velocity in flow direction
-Ubar            $flowUbar;
+flowVel         $flowVelocity;
 
 // Average velocity in flow direction
 delay            $lambdaDelay;

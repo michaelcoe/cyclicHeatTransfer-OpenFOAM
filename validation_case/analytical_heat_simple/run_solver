@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-processors=4;
+processors=24;
 solver=cyclicHeatSimpleFoam
 # solver=buoyantSimpleFoam
 # solver=buoyantBoussinesqSimpleFoam

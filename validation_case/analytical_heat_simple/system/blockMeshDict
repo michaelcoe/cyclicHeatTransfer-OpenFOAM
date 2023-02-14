@@ -16,8 +16,8 @@ FoamFile
 
 scale   1.0;
 
-xmax    0.5;
-xmin    -0.5;
+xmax    1.0;
+xmin    0.0;
 ymax    0.25;
 ymin    -0.25;
 zmax    0.01;

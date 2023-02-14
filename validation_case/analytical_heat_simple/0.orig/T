@@ -22,59 +22,13 @@ internalField   $bulkTemp;
 
 boundaryField
 {
+    #includeEtc "caseDicts/setConstraintTypes"
+
     "wall.*"
     {
-        // type            externalWallHeatFluxTemperature;
-
-        // mode            coefficient;
-
-        // Ta              uniform 323.25;
-        // h               uniform 0.026;
-        // thicknessLayers (0.75e-3);
-        // kappaLayers     (1);
-
-        // kappaMethod     fluidThermo;
-
-        // value           uniform 323.25;
-        type               fixedValue;
-        value              $wallTemp;
+        type            fixedValue;
+        value           $wallTemp;
     }
-
-    // "(ymax|ymin)"
-    // {
-    //     // type            externalWallHeatFluxTemperature;
-
-    //     // mode            coefficient;
-
-    //     // Ta              uniform 300;
-    //     // h               uniform 0.026;
-    //     // thicknessLayers (2e-3);
-    //     // kappaLayers     (1);
-
-    //     // kappaMethod     fluidThermo;
-
-    //     // value           uniform 300;
-    //     type                fixedValue;
-    //     value               uniform 293.15;
-    // }
-
-    // "(xmax|xmin)"
-    // {
-    //     // type            externalWallHeatFluxTemperature;
-
-    //     // mode            coefficient;
-
-    //     // Ta              uniform 300;
-    //     // h               uniform 0.026;
-    //     // thicknessLayers (2e-3);
-    //     // kappaLayers     (1);
-
-    //     // kappaMethod     fluidThermo;
-
-    //     // value           uniform 300;
-    //     type                fixedValue;
-    //     value               uniform 293.15;
-    // }
 
     #include "include/constantPatches"
 }
